@@ -1,0 +1,7 @@
+Catatan Kendala 28 Oktober 2021
+Goals : Komputasi per Baris dari Repository Rujukan
+
+- Kendala : Setelah di run per baris. Terdapat temuan penyebab error saat mencoba Load data, hal tersebut karena terdapat step yang hilang dari repository rujukan sehingga saat mencoba load data terdapat variable yang not defined.
+
+- Solusi : Mencari repository lain sebagai rujukan
+
