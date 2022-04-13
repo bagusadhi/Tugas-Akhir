@@ -1,9 +1,0 @@
-Anomalous Soun Detection
-
-Menggunakan 3 jenis classifier
-Unsupervised : Auto Encoder (done)
-Supervised : Mobile Net (done)
-Semi Supervised : Generative Adversarial Networks (Process)
-
-Kendala :
-Memahami GAN sebagai classifier semi supervised karena dari sumber repository DCASE tidak tertata rapi.
