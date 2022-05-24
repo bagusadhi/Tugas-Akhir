@@ -43,7 +43,9 @@ def _get_adapted_dataset(split, label=None, centered=False, flatten=False):
     Returns :
             (tuple): <training, testing> images and labels
     """
-    data = np.load('data/datasets_bigan/target/bearing_section_00_target_2022.npz')
+    #data = np.load('data/datasets_bigan/target/bearing_section_00_target_2022.npz')
+    x_test = np.load("data/datasets_bigan/test/x_test_bearing_section_00_target.npy")
+    y_test = np.load("data/datasets_bigan/test/y_test_bearing_section_00_target.npy")
     x_train = np.load("data/datasets_bigan/train/x_train_bearing_section_0.npy")
     y_train = np.load("data/datasets_bigan/train/y_train_bearing_section_0.npy")
     dataset = {}
@@ -105,8 +107,8 @@ def _get_adapted_dataset(split, label=None, centered=False, flatten=False):
     # training_x_data = training_x_data[training_y_data == label]
     # training_y_data = training_y_data[training_y_data == label]
 
-    testing_x_data = data['x_test']
-    testing_y_data = data['y_test']
+    testing_x_data = x_test
+    testing_y_data = y_test
     # testing_y_data = np.array(list(map(int, testing_y_data)))
 
 
