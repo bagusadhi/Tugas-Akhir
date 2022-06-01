@@ -129,7 +129,7 @@ if __name__ == "__main__":
                                                     dir_name=dir_name,
                                                     mode=mode)
             print(f"len files : {len(files)}")
-            # print(files, y_true)
+            print(f"y_true : {y_true.shape}")
 
             # setup anomaly score file path
             anomaly_score_csv = "{result}/anomaly_score_{machine_type}_{section_name}_{dir_name}.csv".format(result=param["result_directory"],
@@ -160,7 +160,8 @@ if __name__ == "__main__":
                                                     hop_length=param["feature"]["hop_length"],
                                                     power=param["feature"]["power"])
                     # print(f"data 1 = {data.shape}")
-                    data = data[: : 250, :]
+                    data = data[: : 8, :]
+                    # print(data.shape)
                     test.append(data)
                     # np.save("test.npy", data)
                 except:
@@ -178,23 +179,29 @@ if __name__ == "__main__":
                 data = data.reshape(data.shape[0], param["feature"]["n_frames"], param["feature"]["n_mels"], 1)
                 # print(f"data 2 = {data.shape}")
             test = np.array(test)
+            # test = test.reshape(len(files), 2048, 128)
+            print(f"test shape : {test.shape}")
             
-            test = test.reshape(200, 64 * 128 * 1)
-            print(test.shape)
-            print(f"y_true : {y_true.shape}")
+            # test = test.reshape(200, 64 * 128 * 1)
+            # print(test.shape)
+            # print(f"y_true : {y_true.shape}")
             # np.save("test.npy", test)
+# ==============================================================================================
+            # source_x_test_normal = test[0:50, :]
+            # source_x_test_normal = source_x_test_normal.reshape(50*32, 64*128)
+            # print(source_x_test_normal.shape)
+            # source_x_test_anomaly = test[100:150, :]
+            # source_x_test_anomaly = source_x_test_anomaly.reshape(50*32, 64*128)
 
-            source_x_test_normal = test[0:50, :]
-            print(source_x_test_normal.shape)
-            source_x_test_anomaly = test[100:150, :]
+            # target_x_test_normal = test[50:100, :]
+            # target_x_test_normal = target_x_test_normal.reshape(50*32, 64*128)
+            # target_x_test_anomaly = test[150:, :]
+            # target_x_test_anomaly = target_x_test_anomaly.reshape(50*32, 64*128)
 
-            target_x_test_normal = test[50:100, :]
-            target_x_test_anomaly = test[150:, :]
-
-            source_x_test = np.concatenate((source_x_test_normal, source_x_test_anomaly), axis = 0)
-            target_x_test = np.concatenate((target_x_test_normal, target_x_test_anomaly), axis = 0)
-            np.save(f"x_test_{machine_type}_{section_name}_source.npy", source_x_test)
-            np.save(f"x_test_{machine_type}_{section_name}_target.npy", target_x_test)
+            # source_x_test = np.concatenate((source_x_test_normal, source_x_test_anomaly), axis = 0)
+            # target_x_test = np.concatenate((target_x_test_normal, target_x_test_anomaly), axis = 0)
+            # np.save(f"/TA/bagus_adhi/BiGAN/bigan_dcase/data/datasets_bigan/test/x_test_{machine_type}_{section_name}_source.npy", source_x_test)
+            # np.save(f"/TA/bagus_adhi/BiGAN/bigan_dcase/data/datasets_bigan/test/x_test_{machine_type}_{section_name}_target.npy", target_x_test)
 
 # ===================================================================================================================
 
@@ -206,8 +213,22 @@ if __name__ == "__main__":
 
             source_y_test = np.concatenate((source_y_test_normal, source_y_test_anomaly), axis = 0)
             target_y_test = np.concatenate((target_y_test_normal, target_y_test_anomaly), axis = 0)
-            np.save(f"y_test_{machine_type}_{section_name}_source.npy", source_y_test)
-            np.save(f"y_test_{machine_type}_{section_name}_target.npy", target_y_test)
+            np.save(f"/TA/bagus_adhi/Tugas-Akhir/code/bigan_dcase/test/y_test_{machine_type}_{section_name}_source.npy", source_y_test)
+            np.save(f"/TA/bagus_adhi/Tugas-Akhir/code/bigan_dcase/test/y_test_{machine_type}_{section_name}_target.npy", target_y_test)
+            
+#====================================================================================================================
+            source_y_test_normal = np.zeros((50*32), float)
+            source_y_test_anomaly = np.ones((50*32), float)
+
+            target_y_test_normal = np.zeros((50*32), float)
+            target_y_test_anomaly = np.ones((50*32), float)
+
+
+            source_y_test = np.concatenate((source_y_test_normal, source_y_test_anomaly), axis = 0)
+            target_y_test = np.concatenate((target_y_test_normal, target_y_test_anomaly), axis = 0)
+            np.save(f"/TA/bagus_adhi/Tugas-Akhir/code/bigan_dcase/test/y_test_{machine_type}_{section_name}_source.npy", source_y_test)
+            np.save(f"/TA/bagus_adhi/Tugas-Akhir/code/bigan_dcase/test/y_test_{machine_type}_{section_name}_target.npy", target_y_test)
+	    
 
     #             p = model.predict(data)[:, section_idx : section_idx + 1]
  

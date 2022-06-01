@@ -114,9 +114,11 @@ def file_list_to_data(file_list,
                                                 hop_length=hop_length,
                                                 power=power)
         vectors = vectors[: : n_hop_frames, :]
+        # print(f"vectors : {vectors.shape}")
         if idx == 0:
             data = np.zeros((len(file_list) * vectors.shape[0], dims), float)
         data[vectors.shape[0] * idx : vectors.shape[0] * (idx + 1), :] = vectors
+        # print(f"data 1 : {data.shape}")
 
     return data
 
@@ -192,6 +194,8 @@ if __name__ == "__main__":
                                                     dir_name="train",
                                                     mode=mode)
 
+            print(y_true.shape)
+
             n_files_ea_section.append(len(files))
 
             data_ea_section = file_list_to_data(files,
@@ -204,17 +208,18 @@ if __name__ == "__main__":
                                                 power=param["feature"]["power"])
 
             data = np.append(data, data_ea_section, axis=0)
+            # data_ea_section = data_ea_section.reshape(len(files), 2048, 128)
             
             
             #data_ea_section = data_ea_section.reshape(data_ea_section[0], param["feature"]["n_frames"], param["feature"]["n_mels"], 1)
-            print(f"data 2 : {data.shape}")
+            print(f"data 2 : {data_ea_section.shape}")
             print(type(data_ea_section))
             print(f"data_ea_section_{machine_type}_section_{section_idx}: {data_ea_section.shape}")
-            np.save(f"x_train_{machine_type}_section_{section_idx}.npy", data_ea_section)
+            np.save(f"/TA/bagus_adhi/Tugas-Akhir/code/bigan_dcase/train/x_train_{machine_type}_section_{section_idx}.npy", data_ea_section)
             
             label = np.zeros((data_ea_section.shape[0]), float)
             print(f"label_{machine_type}_section_{section_idx}: {label.shape}")
-            np.save(f"y_train_{machine_type}_section_{section_idx}.npy", label)
+            np.save(f"/TA/bagus_adhi/Tugas-Akhir/code/bigan_dcase/train/y_train_{machine_type}_section_{section_idx}.npy", label)
             
 
         # number of all files
@@ -229,6 +234,7 @@ if __name__ == "__main__":
             n_vectors = n_vectors_ea_file * n_files_ea_section[section_idx]
             condition[start_idx : start_idx + n_vectors, section_idx : section_idx + 1] = 1
             start_idx += n_vectors
+        print(f"label : {condition.shape}")
             
 
         # 1D vector to 2D image
